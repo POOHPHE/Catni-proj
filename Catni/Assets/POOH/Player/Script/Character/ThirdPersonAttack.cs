@@ -19,7 +19,7 @@ public class ThirdPersonAttack : MonoBehaviour
     [SerializeField] Transform arrowPF, skill1PF, skill2PF;
     [SerializeField] Transform spawnSkillPos;
     [SerializeField] ParticleSystem skill3PF;
-    [SerializeField] ParticleSystem slashVFX;
+    [SerializeField] ParticleSystem[] slashVFX;
     [SerializeField] AudioSource slashSound;
 
 
@@ -88,6 +88,7 @@ public class ThirdPersonAttack : MonoBehaviour
             aimCamera.gameObject.SetActive(true);
             _thirdPersonController.SetSensitivity(aimSensitivity);
             _thirdPersonController.SetRotateOnMove(false);
+            _animator.SetBool("Aim", true);
 
             Vector3 worldAimTarget = mouseWorldPosition;
             worldAimTarget.y = transform.position.y;
@@ -146,7 +147,7 @@ public class ThirdPersonAttack : MonoBehaviour
             aimCamera.gameObject.SetActive(false);
             _thirdPersonController.SetSensitivity(normalSensitivity);
             _thirdPersonController.SetRotateOnMove(true);
-
+            _animator.SetBool("Aim", false);
             //Cannot attack when in air and while aim
             if (!_thirdPersonController.Grounded)
             {
@@ -161,8 +162,7 @@ public class ThirdPersonAttack : MonoBehaviour
                 _starterAssetsInputs.attack = false;
                 _thirdPersonController.CanMove = false;
                 _animator.SetTrigger("NormalAttack");
-                slashVFX.Play();
-                slashSound.Play();
+                
             }
 
             if (_starterAssetsInputs.skill3)
@@ -189,9 +189,10 @@ public class ThirdPersonAttack : MonoBehaviour
         }
     }
 
-    public void AttackBegin()
+    public void AttackBegin(int index)
     {
-        
+        slashVFX[index].Play();
+        slashSound.Play();
     }
 
     public void AttackEnd()

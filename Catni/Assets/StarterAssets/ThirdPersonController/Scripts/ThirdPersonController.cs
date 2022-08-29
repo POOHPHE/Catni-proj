@@ -111,6 +111,7 @@ namespace StarterAssets
         private int _animIDFreeFall;
         private int _animIDMotionSpeed;
         private int _animIDNormalAttack;
+        private int _animIDDash;
 
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
         private PlayerInput _playerInput;
@@ -210,6 +211,7 @@ namespace StarterAssets
             _animIDFreeFall = Animator.StringToHash("FreeFall");
             _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
             _animIDNormalAttack = Animator.StringToHash("NormalAttack");
+            _animIDDash = Animator.StringToHash("Dash");
         }
 
         private void GroundedCheck()
@@ -475,6 +477,7 @@ namespace StarterAssets
             _dashingTime = 0.0f;
             dashSound.Play();
             dashVFX.Play();
+            _animator.SetBool(_animIDDash, true);
         }
         public bool IsDashing()
         {
@@ -488,6 +491,7 @@ namespace StarterAssets
             _isDashing = false;
             _dashingTime = 0.0f;
             CanMove = true;
+            _animator.SetBool(_animIDDash, false);
             // Cancel dash momentum, if not grounded, preserve gravity
 
             if (Grounded)
