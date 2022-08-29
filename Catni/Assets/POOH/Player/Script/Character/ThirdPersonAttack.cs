@@ -10,7 +10,7 @@ public class ThirdPersonAttack : MonoBehaviour
     public float aimSpeed = 20f;
     public int maxArrowStack = 4, arrowStack;
     public float arrowCooldownTime = 6f, skill1CooldownTime = 10f, skill2CooldownTime = 10f, skill3CooldownTime = 20f;
-    
+    public AudioSource skill3Sound;
 
     [SerializeField] private CinemachineVirtualCamera aimCamera;
     [SerializeField] private float normalSensitivity;
@@ -21,6 +21,7 @@ public class ThirdPersonAttack : MonoBehaviour
     [SerializeField] ParticleSystem skill3PF;
     [SerializeField] ParticleSystem slashVFX;
     [SerializeField] AudioSource slashSound;
+
 
     private ThirdPersonController _thirdPersonController;
     private StarterAssetsInputs _starterAssetsInputs;
@@ -172,6 +173,7 @@ public class ThirdPersonAttack : MonoBehaviour
                 {
                     _skill3CooldownTimer = skill3CooldownTime;
                     skill3PF.Play();
+                    skill3Sound.Play();
                 }
             }
 
